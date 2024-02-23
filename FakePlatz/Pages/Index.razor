@@ -1,0 +1,44 @@
+﻿@page "/"
+@using FakePlatz.Entity;
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+@inject HttpClient HttpClient;
+
+<h3>Listado de productos</h3>
+@if (products == null)
+    {
+<p> Cargando listo de productos</p>
+}
+else
+{
+<ul>
+  
+     
+    
+   
+   @foreach (Product producto in products)
+       {
+           <li>@producto.Title</li>
+          
+       }
+
+</ul>
+
+
+
+
+}
+@code{
+
+    private List<Product> products;
+    protected override async Task OnInitializedAsync()
+    {
+        string urlFake = "https://api.escuelajs.co/api/v1/products";
+        products = await HttpClient.GetFromJsonAsync
+        <List<Product>>(urlFake);
+        //return base.OnInitializedAsync();
+    }
+
+}
